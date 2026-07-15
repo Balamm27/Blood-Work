@@ -1,3 +1,5 @@
+import { testInfo } from "./test-info";
+
 type Status = "attention" | "watch" | "good" | "info";
 
 type Result = {
@@ -62,13 +64,33 @@ const results: Result[] = [
   { group: "Blood count", test: "MCH", value: "29 pg", range: "27-33", status: "good" },
   { group: "Blood count", test: "MCHC", value: "33 g/dL", range: "32-36", status: "good" },
   { group: "Blood count", test: "Platelets", value: "205 K/uL", range: "140-440", status: "good" },
+  { group: "Blood count", test: "Neutrophils (%)", value: "47.5%", range: "Not evaluated", status: "info" },
+  { group: "Blood count", test: "Bands (%)", value: "0.0%", range: "Not evaluated", status: "info" },
+  { group: "Blood count", test: "Lymphocytes (%)", value: "44.9%", range: "Not evaluated", status: "info" },
+  { group: "Blood count", test: "Monocytes (%)", value: "5.7%", range: "Not evaluated", status: "info" },
+  { group: "Blood count", test: "Eosinophils (%)", value: "1.3%", range: "Not evaluated", status: "info" },
+  { group: "Blood count", test: "Basophils (%)", value: "0.6%", range: "Not evaluated", status: "info" },
+  { group: "Blood count", test: "Other white cells (%)", value: "0.0%", range: "Not evaluated", status: "info" },
   { group: "Blood count", test: "Absolute neutrophils", value: "3.66 K/uL", range: "1.8-7.8", status: "good" },
+  { group: "Blood count", test: "Absolute bands", value: "0.00 K/uL", range: "0.0-0.6", status: "good" },
   { group: "Blood count", test: "Absolute lymphocytes", value: "3.46 K/uL", range: "0.6-3.4", status: "watch" },
+  { group: "Blood count", test: "Absolute monocytes", value: "0.44 K/uL", range: "0.0-1.1", status: "good" },
+  { group: "Blood count", test: "Absolute eosinophils", value: "0.10 K/uL", range: "0.0-0.7", status: "good" },
+  { group: "Blood count", test: "Absolute basophils", value: "0.05 K/uL", range: "0.0-0.2", status: "good" },
+  { group: "Blood count", test: "Absolute other white cells", value: "0.00 K/uL", range: "0.0", status: "good" },
   { group: "Hormones", test: "Total testosterone", value: "424 ng/dL", range: "180-917", status: "good" },
   { group: "Hormones", test: "Free testosterone", value: "10.07 ng/dL", range: "3.3-26.8", status: "good" },
   { group: "Hormones", test: "% free testosterone", value: "2.4%", range: "1.8-3.2", status: "good" },
   { group: "Hormones", test: "Sex hormone binding globulin", value: "22.5 nmol/L", range: "9-68", status: "good" },
   { group: "Hormones", test: "Morning cortisol", value: "10.10 ug/dL", range: "6.02-18.40", status: "good" },
+  { group: "Infection screening", test: "Treponemal antibody total", value: "Non-reactive", range: "Non-reactive", status: "good" },
+  { group: "Infection screening", test: "Hepatitis B surface antigen", value: "Negative", range: "Negative", status: "good" },
+  { group: "Infection screening", test: "Hepatitis B surface antibody", value: "Positive", range: "See interpretation", status: "good" },
+  { group: "Infection screening", test: "Hepatitis C antibody", value: "Negative", range: "Negative", status: "good" },
+  { group: "Infection screening", test: "HIV 1/2 antigen/antibody", value: "Non-reactive", range: "Non-reactive", status: "good" },
+  { group: "Infection screening", test: "Gonorrhea RNA", value: "Negative", range: "Negative", status: "good" },
+  { group: "Infection screening", test: "Chlamydia RNA", value: "Negative", range: "Negative", status: "good" },
+  { group: "Infection screening", test: "Trichomonas RNA", value: "Negative", range: "Negative", status: "good" },
 ];
 
 const groups = Array.from(new Set(results.map((result) => result.group)));
@@ -177,15 +199,38 @@ export default function Home() {
             <div><p className="eyebrow dark">Source transcription</p><h2>Complete visible results</h2></div>
             <div className="legend"><span><StatusDot status="attention" /> Out of range</span><span><StatusDot status="watch" /> Review</span><span><StatusDot status="good" /> In range</span></div>
           </div>
+          <div className="results-help">
+            <span className="info-icon static" aria-hidden="true">i</span>
+            <p><strong>Every test is explained.</strong> Select any result row to reveal what it measures, why it may have been ordered, what your value means, what an abnormal value can indicate, and the usual next step. Select it again to close.</p>
+          </div>
           <div className="results-groups">
             {groups.map((group) => (
-              <details key={group} open={["Cardiovascular", "Inflammation", "Iron"].includes(group)}>
-                <summary><span>{group}</span><span>{results.filter((item) => item.group === group).length} results</span></summary>
-                <div className="table-wrap"><table><thead><tr><th>Status</th><th>Test</th><th>Result</th><th>Printed reference</th></tr></thead><tbody>
-                  {results.filter((item) => item.group === group).map((item) => (
-                    <tr key={item.test}><td><StatusDot status={item.status} /></td><td>{item.test}</td><td><strong>{item.value}</strong></td><td>{item.range}</td></tr>
-                  ))}
-                </tbody></table></div>
+              <details className="result-category" data-group={group} key={group} open={["Cardiovascular", "Inflammation", "Iron"].includes(group)}>
+                <summary className="category-summary" aria-label={`Open ${group} results`}><span>{group}</span><span>{results.filter((item) => item.group === group).length} results</span></summary>
+                <div className="result-list">
+                  <div className="result-row result-row-head" aria-hidden="true"><span>Status</span><span>Test</span><span>Result</span><span>Printed reference</span></div>
+                  {results.filter((item) => item.group === group).map((item) => {
+                    const info = testInfo[item.test];
+                    return (
+                      <details className={`result-item ${item.status}`} key={item.test}>
+                        <summary className="result-row" aria-label={`Explain ${item.test}`}>
+                          <span className="status-cell"><StatusDot status={item.status} /></span>
+                          <span className="test-cell"><span>{item.test}</span><span className="info-icon" aria-hidden="true">i</span></span>
+                          <span className="value-cell"><strong>{item.value}</strong></span>
+                          <span className="range-cell">{item.range}</span>
+                        </summary>
+                        <div className="result-explanation">
+                          <div><span className="explanation-label">What it measures</span><p>{info.measures}</p></div>
+                          <div><span className="explanation-label">Why it may have been ordered</span><p>{info.why}</p></div>
+                          <div className="your-result"><span className="explanation-label">What your result means</span><p>{info.yours}</p></div>
+                          <div><span className="explanation-label">If it is outside range</span><p>{info.abnormal}</p></div>
+                          <div><span className="explanation-label">Usual recommended approach</span><p>{info.next}</p></div>
+                          <p className="explanation-disclaimer">This is general education, not a diagnosis or individualized treatment instruction. Symptoms, trends, medicines, fasting status, and medical history can change the interpretation.</p>
+                        </div>
+                      </details>
+                    );
+                  })}
+                </div>
               </details>
             ))}
           </div>
@@ -216,6 +261,13 @@ export default function Home() {
               <li><a href="https://www.cdc.gov/cholesterol/about/ldl-and-hdl-cholesterol-and-triglycerides.html">CDC: LDL, HDL, and triglycerides</a></li>
               <li><a href="https://ods.od.nih.gov/factsheets/VitaminD-Consumer/">NIH Office of Dietary Supplements: Vitamin D</a></li>
               <li><a href="https://www.niddk.nih.gov/health-information/kidney-disease/chronic-kidney-disease-ckd/tests-diagnosis">NIDDK: Chronic kidney disease tests and diagnosis</a></li>
+              <li><a href="https://medlineplus.gov/lab-tests/complete-blood-count-cbc/">MedlinePlus: Complete blood count</a></li>
+              <li><a href="https://medlineplus.gov/lab-tests/comprehensive-metabolic-panel-cmp/">MedlinePlus: Comprehensive metabolic panel</a></li>
+              <li><a href="https://medlineplus.gov/lab-tests/iron-tests/">MedlinePlus: Iron tests</a></li>
+              <li><a href="https://medlineplus.gov/lab-tests/tsh-thyroid-stimulating-hormone-test/">MedlinePlus: TSH and thyroid testing</a></li>
+              <li><a href="https://medlineplus.gov/lab-tests/testosterone-levels-test/">MedlinePlus: Testosterone levels</a></li>
+              <li><a href="https://medlineplus.gov/lab-tests/sexually-transmitted-infection-sti-tests/">MedlinePlus: STI tests</a></li>
+              <li><a href="https://www.cdc.gov/hepatitis-b/hcp/diagnosis-testing/index.html">CDC: Hepatitis B testing and interpretation</a></li>
             </ul>
           </div>
         </div>
