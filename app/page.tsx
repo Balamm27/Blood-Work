@@ -1,4 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { testInfo } from "./test-info";
+import { VijiDashboard } from "./viji-dashboard";
 
 type Status = "attention" | "watch" | "good" | "info";
 
@@ -99,7 +103,7 @@ const StatusDot = ({ status }: { status: Status }) => (
   <span className={`status-dot ${status}`} aria-label={status} />
 );
 
-export default function Home() {
+function BalaDashboard() {
   return (
     <main>
       <header className="hero">
@@ -275,5 +279,35 @@ export default function Home() {
 
       <footer><div className="wrap footer-grid"><div><strong>Annual Lab Review</strong><span>Prepared July 14, 2026</span></div><p>Educational summary only. Seek urgent care for urgent symptoms regardless of laboratory results.</p></div></footer>
     </main>
+  );
+}
+
+export default function Home() {
+  const [person, setPerson] = useState<"bala" | "viji">("bala");
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => {
+      if (window.location.hash.toLowerCase().startsWith("#viji")) setPerson("viji");
+    }, 0);
+    return () => window.clearTimeout(timer);
+  }, []);
+
+  const choosePerson = (next: "bala" | "viji") => {
+    setPerson(next);
+    window.history.replaceState(null, "", next === "bala" ? "#bala" : "#viji");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <>
+      <div className="person-tabs-bar" role="navigation" aria-label="Choose a family member">
+        <div className="wrap person-tabs">
+          <span>View results for</span>
+          <button className={person === "bala" ? "active" : ""} aria-pressed={person === "bala"} onClick={() => choosePerson("bala")}>Bala</button>
+          <button className={person === "viji" ? "active" : ""} aria-pressed={person === "viji"} onClick={() => choosePerson("viji")}>Viji</button>
+        </div>
+      </div>
+      {person === "bala" ? <BalaDashboard /> : <VijiDashboard />}
+    </>
   );
 }

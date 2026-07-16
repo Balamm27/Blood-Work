@@ -285,7 +285,7 @@ export const testInfo: Record<string, TestInfo> = {
     why: "It is usually the first-line screening test for an underactive or overactive thyroid.",
     yours: "2.520 uIU/mL is within the printed range and is consistent with normal pituitary-thyroid signaling.",
     abnormal: "High TSH often suggests an underactive thyroid, while low TSH may suggest an overactive thyroid, medication effect, or pituitary-related issue. Free hormone levels clarify the pattern.",
-    next: "No correction is indicated from an in-range TSH alone. Abnormal results are usually repeated and interpreted with free T4, symptoms, medicines, pregnancy status, and antibodies.",
+    next: "Interpret TSH with free T4, symptoms, medicines, pregnancy status, and antibodies. An abnormal result is usually confirmed or trended, with treatment based on the full pattern rather than TSH alone.",
   },
   "Free T4": {
     measures: "The unbound portion of thyroxine, the main hormone produced by the thyroid and available to tissues.",
@@ -566,5 +566,59 @@ export const testInfo: Record<string, TestInfo> = {
     yours: "Negative means trichomonas genetic material was not detected in the urine sample.",
     abnormal: "A positive result indicates infection. Untreated infection can cause persistent genital inflammation, facilitate transmission, and increase susceptibility to other STIs.",
     next: "A positive result is treated with a clinician-prescribed antimicrobial, with partner treatment and temporary abstinence as advised to prevent reinfection. Retesting decisions depend on sex and risk.",
+  },
+  FSH: {
+    measures: "Follicle-stimulating hormone, a pituitary hormone that helps ovarian follicles develop and supports estrogen production.",
+    why: "It may be ordered to evaluate menstrual irregularity, ovulation, ovarian reserve, menopause, infertility, or pituitary function.",
+    abnormal: "High or low values can reflect normal cycle timing, pregnancy, menopause, ovarian or pituitary conditions, low energy availability, or medication effects. A single untimed result is not diagnostic.",
+    next: "Interpret it using menstrual-cycle day, pregnancy status, hormonal medicines, estradiol, symptoms, and the reason for testing. Fertility evaluation often uses specifically timed testing.",
+  },
+  LH: {
+    measures: "Luteinizing hormone, a pituitary hormone that helps trigger ovulation and supports progesterone production afterward.",
+    why: "It may be used to evaluate ovulation, menstrual irregularity, infertility, menopause, PCOS patterns, or pituitary function.",
+    abnormal: "Values change sharply through the menstrual cycle. High or low results can relate to cycle timing, menopause, pregnancy, ovarian or pituitary conditions, energy deficiency, or medicines.",
+    next: "Use the cycle day, symptoms, pregnancy status, and related hormones. Do not diagnose lack of ovulation or PCOS from one LH value or an LH-to-FSH ratio alone.",
+  },
+  Estradiol: {
+    measures: "Estradiol, the main estrogen during reproductive years, produced mostly by developing ovarian follicles.",
+    why: "It may be checked for menstrual or fertility evaluation, ovarian function, menopause, or monitoring hormone treatment.",
+    abnormal: "Levels normally vary widely with the cycle and pregnancy. Unexpected values can relate to ovarian function, menopause, pregnancy, low energy availability, pituitary signaling, or hormone medicines.",
+    next: "Interpret with cycle day, FSH, LH, pregnancy status, symptoms, and medications. Repeat at a defined cycle point if the clinical question requires it.",
+  },
+  Progesterone: {
+    measures: "Progesterone, a hormone that rises after ovulation and supports the uterine lining and early pregnancy.",
+    why: "It is often ordered to assess whether ovulation likely occurred, evaluate menstrual or fertility concerns, or monitor pregnancy or treatment.",
+    abnormal: "A low value may be entirely normal before ovulation. Timing errors are common. Results can also reflect anovulation, pregnancy status, ovarian function, or hormone medication.",
+    next: "Interpret against the exact cycle day or days after ovulation. A clinician may repeat a properly timed level or use cycle tracking and ultrasound when needed.",
+  },
+  Prolactin: {
+    measures: "A pituitary hormone involved in breast development and milk production that also affects menstrual and reproductive signaling.",
+    why: "It may be checked for irregular or absent periods, infertility, unexpected milk production, headaches, vision symptoms, or pituitary concerns.",
+    abnormal: "High prolactin can occur with pregnancy, stress, sleep, breast stimulation, low thyroid function, certain medicines, kidney disease, or a pituitary growth. Low values are rarely a concern outside specific contexts.",
+    next: "Unexpected elevations are often repeated under calm, standardized conditions and reviewed with pregnancy status, medicines, TSH, symptoms, and sometimes pituitary evaluation.",
+  },
+  "DHEA-S": {
+    measures: "Dehydroepiandrosterone sulfate, an androgen made mostly by the adrenal glands.",
+    why: "It can help evaluate acne, excess facial or body hair, scalp hair loss, irregular periods, infertility, early puberty, or suspected adrenal androgen excess.",
+    abnormal: "High levels can occur with PCOS or adrenal causes, but the degree of elevation, age, symptoms, and other hormones matter. Low levels can occur with adrenal or pituitary conditions and with aging.",
+    next: "Review symptoms, supplements, medicines, menstrual history, testosterone, and other testing with a clinician. Mild isolated elevations are usually confirmed and interpreted before imaging or treatment.",
+  },
+  "Testosterone LC/MS": {
+    measures: "Total testosterone measured by liquid chromatography and mass spectrometry, a method useful at the lower concentrations typical in women.",
+    why: "It may be ordered for signs of androgen excess, menstrual irregularity, infertility, PCOS assessment, or suspected ovarian or adrenal hormone disorders.",
+    abnormal: "High values can relate to PCOS, medicines or supplements, and less commonly ovarian or adrenal disorders. Low values have limited diagnostic meaning without a specific clinical context.",
+    next: "Interpret with symptoms, DHEA-S, cycle history, medicines, and sometimes sex hormone binding globulin or free testosterone. Do not treat the number in isolation.",
+  },
+  "Anti-Mullerian hormone": {
+    measures: "Anti-Mullerian hormone, produced by cells around small ovarian follicles and used as a marker of ovarian reserve and expected response to ovarian stimulation.",
+    why: "It is commonly ordered during infertility or fertility-preservation evaluation and to help plan medication dosing for assisted reproduction.",
+    abnormal: "Lower values may suggest fewer recruitable follicles, while higher values can occur with a larger follicle pool or PCOS. Assays vary, and neither high nor low AMH measures egg quality or guarantees a fertility outcome.",
+    next: "Interpret with age, menstrual history, antral-follicle count, FSH and estradiol when relevant, and the fertility goal. Do not use one AMH result as a natural-pregnancy forecast.",
+  },
+  "Methylmalonic acid": {
+    measures: "Methylmalonic acid, a compound that can accumulate when vitamin B12 is insufficient for normal cellular metabolism.",
+    why: "It can help detect functional B12 deficiency when the B12 level or symptoms are unclear.",
+    abnormal: "An elevated result can support B12 deficiency, but kidney impairment and other factors can also raise it. A normal or negative result makes clinically important B12 deficiency less likely.",
+    next: "Interpret with vitamin B12, blood count, kidney function, diet, medicines, and neurologic symptoms. Treat a confirmed deficiency and its cause with clinician guidance.",
   },
 };
